@@ -112,6 +112,17 @@ Then open the **web dashboard** in a browser:
 http://localhost:8080/
 ```
 
+Explore and try the **REST API interactively** via Swagger UI:
+
+```
+http://localhost:8080/docs
+```
+
+> Click **Authorize**, paste the API key (`change_me_super_secret_key` by
+> default), and use **Try it out** to call the `/api/*` endpoints from the
+> browser. The raw OpenAPI 3.0 spec is served at
+> [`http://localhost:8080/openapi.yaml`](http://localhost:8080/openapi.yaml).
+
 A `Makefile` wraps the common commands — run `make help` to list them.
 
 ### Web dashboard (Vue 3 SPA)
