@@ -1,0 +1,179 @@
+openapi: 3.0.3
+info:
+  title: Delupe Product Feed API
+  description: >
+    REST API for importing, querying and reporting on merchant product feeds.
+    All `/api/*` endpoints require an API key sent in the `X-API-Key` header.
+    Click **Authorize** and paste your key (default in development:
+    `change_me_super_secret_key`) to try the endpoints below.
+  version: 1.0.0
+  license:
+    name: MIT
+
+servers:
+  - url: /
+    description: Current host
+
+tags:
+  - name: Products
+    description: Product listing, reporting and duplicate detection
+  - name: System
+    description: Service health
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /api/products:
+    get:
+      tags: [Products]
+      summary: List products
+      description: Paginated, filterable list of products.
+      parameters:
+        - { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 }, description: Page number }
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 50 }, description: Page size (max 100) }
+        - { name: currency, in: query, schema: { type: string, example: EUR }, description: Filter by ISO 4217 currency code }
+        - { name: min_price, in: query, schema: { type: number, format: float, example: 100 }, description: Minimum price (inclusive) }
+        - { name: max_price, in: query, schema: { type: number, format: float, example: 500 }, description: Maximum price (inclusive) }
+      responses:
+        '200':
+          description: A page of products
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProductListResponse' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/products/summary:
+    get:
+      tags: [Products]
+      summary: Catalog summary
+      description: Aggregate report across all products.
+      responses:
+        '200':
+          description: Summary report
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Summary' }
+              example:
+                count: 1000
+                total_price: 45670.00
+                average_price: 45.67
+                currencies: { EUR: 500, USD: 500 }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/products/duplicates:
+    get:
+      tags: [Products]
+      summary: Duplicate products
+      description: Products that share the same name OR the same link.
+      responses:
+        '200':
+          description: Duplicate products
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DuplicateListResponse' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /health:
+    get:
+      tags: [System]
+      summary: Health check
+      description: Liveness and database connectivity. Public — no API key required.
+      security: []
+      responses:
+        '200':
+          description: Service healthy
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Health' }
+              example: { status: ok, database: connected }
+        '503':
+          description: Database unreachable
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Health' }
+              example: { status: error, database: disconnected }
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: Unauthorized, message: Invalid or missing API key. }
+
+  schemas:
+    Product:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        external_id: { type: string, example: SKU-1001 }
+        merchant_id: { type: string, example: merchant-001 }
+        name: { type: string, example: Wireless Headphones }
+        link: { type: string, format: uri, example: 'https://shop.example.com/p/1001' }
+        image_link: { type: string, format: uri, nullable: true, example: 'https://cdn.example.com/img/1001.jpg' }
+        price: { type: number, format: float, example: 199.99 }
+        original_price: { type: number, format: float, nullable: true, example: 249.99 }
+        currency: { type: string, example: EUR }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+
+    Pagination:
+      type: object
+      properties:
+        page: { type: integer, example: 1 }
+        limit: { type: integer, example: 50 }
+        total: { type: integer, example: 1000 }
+        pages: { type: integer, example: 20 }
+
+    ProductListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items: { $ref: '#/components/schemas/Product' }
+        pagination: { $ref: '#/components/schemas/Pagination' }
+        filters:
+          type: object
+          additionalProperties: true
+
+    Summary:
+      type: object
+      properties:
+        count: { type: integer, example: 1000 }
+        total_price: { type: number, format: float, example: 45670.00 }
+        average_price: { type: number, format: float, example: 45.67 }
+        currencies:
+          type: object
+          additionalProperties: { type: integer }
+          example: { EUR: 500, USD: 500 }
+
+    DuplicateListResponse:
+      type: object
+      properties:
+        count: { type: integer, example: 4 }
+        data:
+          type: array
+          items: { $ref: '#/components/schemas/Product' }
+
+    Health:
+      type: object
+      properties:
+        status: { type: string, example: ok }
+        database: { type: string, example: connected }
+
+    Error:
+      type: object
+      properties:
+        error: { type: string }
+        message: { type: string }

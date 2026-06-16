@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Docs · {{ app_name }}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui.css">
+    <style>
+        html, body { margin: 0; background: #fafafc; }
+        .topbar {
+            display: flex; align-items: center; gap: 12px;
+            padding: 14px 22px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        .topbar a { color: #fff; text-decoration: none; font-weight: 600; }
+        .topbar .sp { margin-left: auto; font-size: 14px; opacity: .9; }
+        #swagger { background: #fafafc; min-height: calc(100vh - 52px); }
+        /* Swagger UI hides its own topbar in BaseLayout; nothing else needed. */
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <span>📦</span>
+        <strong>Delupe Product Feed — API Docs</strong>
+        <span class="sp"><a href="/">← Back to dashboard</a></span>
+    </div>
+    <div id="swagger"></div>
+
+    <script src="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui-bundle.js"></script>
+    <script>
+        window.ui = SwaggerUIBundle({
+            url: '/openapi.yaml',
+            dom_id: '#swagger',
+            deepLinking: true,
+            presets: [SwaggerUIBundle.presets.apis],
+            layout: 'BaseLayout',
+            tryItOutEnabled: true,
+            persistAuthorization: true
+        });
+    </script>
+</body>
+</html>
