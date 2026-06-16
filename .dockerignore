@@ -1,0 +1,12 @@
+.git
+.gitignore
+.github
+var/
+vendor/
+.env.local
+.env.*.local
+.php-cs-fixer.cache
+.phpunit.result.cache
+.phpunit.cache/
+node_modules/
+README.md

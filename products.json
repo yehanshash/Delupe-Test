@@ -1,0 +1,112 @@
+[
+  {
+    "id": "SKU-1001",
+    "merchant_id": "merchant-001",
+    "name": "Wireless Headphones",
+    "link": "https://shop.example.com/p/1001",
+    "image_link": "https://cdn.example.com/img/1001.jpg",
+    "price": 199.99,
+    "original_price": 249.99,
+    "currency": "EUR"
+  },
+  {
+    "id": "SKU-1002",
+    "merchant_id": "merchant-001",
+    "name": "Bluetooth Speaker",
+    "link": "https://shop.example.com/p/1002",
+    "image_link": "https://cdn.example.com/img/1002.jpg",
+    "price": 89.90,
+    "currency": "EUR"
+  },
+  {
+    "id": "SKU-1003",
+    "merchant_id": "merchant-001",
+    "name": "USB-C Cable 2m",
+    "link": "https://shop.example.com/p/1003",
+    "image_link": "https://cdn.example.com/img/1003.jpg",
+    "price": 12.50,
+    "currency": "USD"
+  },
+  {
+    "id": "SKU-1004",
+    "merchant_id": "merchant-001",
+    "name": "Wireless Headphones",
+    "link": "https://shop.example.com/p/1004",
+    "image_link": "https://cdn.example.com/img/1004.jpg",
+    "price": 210.00,
+    "currency": "EUR"
+  },
+  {
+    "id": "SKU-1005",
+    "merchant_id": "merchant-002",
+    "name": "4K Monitor 27\"",
+    "link": "https://shop.example.com/p/1005",
+    "image_link": "https://cdn.example.com/img/1005.jpg",
+    "price": 329.00,
+    "original_price": 399.00,
+    "currency": "USD"
+  },
+  {
+    "id": "SKU-1006",
+    "merchant_id": "merchant-002",
+    "name": "Mechanical Keyboard",
+    "link": "https://shop.example.com/p/shared-peripherals",
+    "image_link": "https://cdn.example.com/img/1006.jpg",
+    "price": 119.99,
+    "currency": "GBP"
+  },
+  {
+    "id": "SKU-1007",
+    "merchant_id": "merchant-002",
+    "name": "Gaming Mouse",
+    "link": "https://shop.example.com/p/shared-peripherals",
+    "image_link": "https://cdn.example.com/img/1007.jpg",
+    "price": 59.99,
+    "currency": "GBP"
+  },
+  {
+    "id": "SKU-1008",
+    "merchant_id": "merchant-002",
+    "name": "Laptop Stand",
+    "link": "https://shop.example.com/p/1008",
+    "image_link": "https://cdn.example.com/img/1008.jpg",
+    "price": 45.00,
+    "currency": "EUR"
+  },
+  {
+    "id": "SKU-1009",
+    "merchant_id": "merchant-003",
+    "name": "",
+    "link": "https://shop.example.com/p/1009",
+    "image_link": "https://cdn.example.com/img/1009.jpg",
+    "price": 0,
+    "currency": "EUR"
+  },
+  {
+    "id": "SKU-1010",
+    "merchant_id": "merchant-003",
+    "name": "Mystery Gadget",
+    "link": "https://shop.example.com/p/1010",
+    "image_link": "https://cdn.example.com/img/1010.jpg",
+    "price": 5.00,
+    "currency": "XX"
+  },
+  {
+    "id": "SKU-1011",
+    "merchant_id": "merchant-003",
+    "name": "1080p Webcam",
+    "link": "https://shop.example.com/p/1011",
+    "image_link": "https://cdn.example.com/img/1011.jpg",
+    "price": "75.25 USD",
+    "currency": "USD"
+  },
+  {
+    "id": "SKU-1012",
+    "merchant_id": "merchant-003",
+    "name": "LED Desk Lamp",
+    "link": "https://shop.example.com/p/1012",
+    "image_link": "https://cdn.example.com/img/1012.jpg",
+    "price": 32.00,
+    "currency": "EUR"
+  }
+]

@@ -1,0 +1,23 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+    http_method_override: false
+    handle_all_throwables: true
+
+    # The web dashboard (login + SPA + BFF) uses a session. The /api firewall
+    # is configured stateless, so programmatic API requests never start one.
+    session:
+        handler_id: null
+        cookie_secure: auto
+        cookie_samesite: lax
+
+    csrf_protection: true
+
+    php_errors:
+        log: true
+
+    validation:
+        enable_attributes: true
+
+when@test:
+    framework:
+        test: true

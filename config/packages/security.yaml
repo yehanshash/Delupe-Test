@@ -1,0 +1,52 @@
+security:
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt))/
+            security: false
+
+        # The public REST API authenticates via the X-API-Key header
+        # (App\EventSubscriber\ApiKeySubscriber), so it is stateless and not
+        # part of the form-login firewall.
+        api:
+            pattern: ^/api
+            stateless: true
+            security: false
+
+        # The web dashboard (SPA shell, BFF, docs) uses session form login.
+        main:
+            lazy: true
+            provider: app_user_provider
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
+                default_target_path: app_shell
+            logout:
+                path: app_logout
+                target: app_login
+
+    access_control:
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: PUBLIC_ACCESS }       # guarded by the API key, not the firewall
+        - { path: ^/health, roles: PUBLIC_ACCESS }
+        - { path: ^/openapi.yaml, roles: PUBLIC_ACCESS }
+        - { path: ^/, roles: ROLE_USER }
+
+when@test:
+    security:
+        password_hashers:
+            # Faster hashing for the test suite.
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+                algorithm: auto
+                cost: 4
+                time_cost: 3
+                memory_cost: 10
